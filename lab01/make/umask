@@ -1,0 +1,13 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+
+mode_t umask(mode_t mask)
+{
+    mode_t old;
+
+    // 바꾸고 싶은 umask로 변경
+    old = umask(0);
+
+    umask(old);
+    return 0;
+}
