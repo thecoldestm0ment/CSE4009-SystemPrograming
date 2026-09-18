@@ -18,26 +18,26 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Usage: %s <file> [file ...]\n", argv[0]);
         exit(1);
     }
-
+    // for문으로 여러 파일 처리
     for (i = 1; i < argc; i++) {
         do_cat(argv[i]);
     }
 
-    return 0;
+    exit(0);
 }
 
 static void do_cat(const char *path)
 {
-    int fd;
-    char buf[BUF_SIZE];
-    ssize_t n;
+    int fd, n;
+    unsigned char buf[BUF_SIZE];
 
     fd = open(path, O_RDONLY);
-    if (fd < 0) {
+    if (fd < 0) { 
         die(path);
     }
 
-    while ((n = read(fd, buf, sizeof(buf))) > 0) {
+    
+    while ((n = read(fd, buf, sizeof(buf))) > 0) { // n: read()가 읽은 바이트 수
         ssize_t written = 0;
 
         while (written < n) {
@@ -51,12 +51,12 @@ static void do_cat(const char *path)
         }
     }
 
-    if (n < 0) {
+    if (n < 0) { // read()가 실패한 경우
         close(fd);
         die("read");
     }
 
-    if (close(fd) < 0) {
+    if (close(fd) < 0) { 
         die("close");
     }
 }
